@@ -5,17 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math Course Website</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional CSS for animation and color */
+        @keyframes colorChange {
+            0% { color: #000; }
+            50% { color: #ff0000; }
+            100% { color: #000; }
+        }
+
+        h1 {
+            animation: colorChange 2s infinite;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Math Course</h1>
+        <!-- Modified header with animated and colored title -->
+        <h1>Math <span style="color: #ff0000;">Course</span></h1>
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Lessons</a></li>
                 <li><a href="#">Exercises</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="about.html">About</a></li> <!-- Linked to about.html -->
             </ul>
         </nav>
     </header>
