@@ -14,6 +14,8 @@
         .container {
             max-width: 600px;
             margin: auto;
+ 
+
         }
         label, input, select, button {
             display: block;
@@ -26,7 +28,9 @@
     border-radius: 5px;
     position: relative;
     transition: background-color 0.75s ease, color 0.75s ease; /* Smooth transition */
+    
 }
+
 
         input, select {
             padding: 8px;
@@ -60,7 +64,7 @@
         
         /* Light Theme */
         .light-theme {
-            background-color: #ffffff;
+            background-color: #f1f1ee;
             color: #000000;
         }
         .light-theme .subject {
@@ -80,7 +84,7 @@
         
         /* Dark Theme */
         .dark-theme {
-            background-color: #121212;
+            background-color: #212121;
             color: #e0e0e0;
         }
         .dark-theme .subject {
@@ -206,48 +210,63 @@ border-radius: 50%; /* Rounded corners for images */
     let subjectCount = 0;
 
     function addSubject() {
-        subjectCount++;  // Increase subject count each time a new subject is added
-        const form = document.getElementById("subjectsForm");
+    const form = document.getElementById("subjectsForm");
 
-        const subjectDiv = document.createElement("div");
-        subjectDiv.classList.add("subject");
-
-        const nameLabel = document.createElement("label");
-        nameLabel.innerText = `Subject ${subjectCount}:`;
-
-        const nameInput = document.createElement("input");
-        nameInput.type = "text";
-        nameInput.placeholder = `Subject ${subjectCount}`;  // Default placeholder
-        nameInput.required = true;
-
-        const creditHoursInput = document.createElement("input");
-        creditHoursInput.type = "number";
-        creditHoursInput.placeholder = "Credit Hours (CR)";
-        creditHoursInput.min = "1";
-        creditHoursInput.required = true;
-
-        const gradeSelect = document.createElement("select");
-        gradeSelect.required = true;
-        for (let grade in gradePoints) {
-            const option = document.createElement("option");
-            option.value = grade;
-            option.innerText = grade;
-            gradeSelect.appendChild(option);
-        }
-
-        const removeButton = document.createElement("button");
-        removeButton.classList.add("remove-btn");
-        removeButton.innerText = "Remove";
-        removeButton.type = "button";
-        removeButton.onclick = () => form.removeChild(subjectDiv);
-
-        subjectDiv.appendChild(nameLabel);
-        subjectDiv.appendChild(nameInput);
-        subjectDiv.appendChild(creditHoursInput);
-        subjectDiv.appendChild(gradeSelect);
-        subjectDiv.appendChild(removeButton);
-        form.appendChild(subjectDiv);
+    // Reset subject count if there are no subjects in the form
+    if (form.children.length === 0) {
+        subjectCount = 1;
+    } else {
+        subjectCount++; // Increment if subjects are present
     }
+
+    // Create a new subject div and add necessary elements
+    const subjectDiv = document.createElement("div");
+    subjectDiv.classList.add("subject");
+
+    const nameLabel = document.createElement("label");
+    nameLabel.innerText = `Subject ${subjectCount}:`;
+
+    const nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.placeholder = `Subject ${subjectCount}`;  // Default placeholder
+    nameInput.required = true;
+
+    const creditHoursInput = document.createElement("input");
+    creditHoursInput.type = "number";
+    creditHoursInput.placeholder = "Credit Hours (CR)";
+    creditHoursInput.min = "1";
+    creditHoursInput.required = true;
+
+    const gradeSelect = document.createElement("select");
+    gradeSelect.required = true;
+    for (let grade in gradePoints) {
+        const option = document.createElement("option");
+        option.value = grade;
+        option.innerText = grade;
+        gradeSelect.appendChild(option);
+    }
+
+    const removeButton = document.createElement("button");
+    removeButton.classList.add("remove-btn");
+    removeButton.innerText = "Remove";
+    removeButton.type = "button";
+    removeButton.onclick = () => {
+        form.removeChild(subjectDiv);
+        
+        // Reset count to 1 if all subjects are removed
+        if (form.children.length === 0) {
+            subjectCount = 0;
+        }
+    };
+
+    subjectDiv.appendChild(nameLabel);
+    subjectDiv.appendChild(nameInput);
+    subjectDiv.appendChild(creditHoursInput);
+    subjectDiv.appendChild(gradeSelect);
+    subjectDiv.appendChild(removeButton);
+    form.appendChild(subjectDiv);
+}
+
 
     function calculateGPA() {
         const subjects = document.getElementsByClassName("subject");
@@ -259,7 +278,7 @@ border-radius: 50%; /* Rounded corners for images */
             const grade = subject.children[3].value;
 
             if (!creditHours || !gradePoints[grade]) {
-                alert("Please fill in credit hours.");
+                alert("Please fill in all credit hours.");
                 return;
             }
 
