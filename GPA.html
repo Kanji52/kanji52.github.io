@@ -269,31 +269,38 @@ border-radius: 50%; /* Rounded corners for images */
 
 
     function calculateGPA() {
-        const subjects = document.getElementsByClassName("subject");
-        let totalGradePoints = 0;
-        let totalCreditHours = 0;
+    const subjects = document.getElementsByClassName("subject");
+    let totalGradePoints = 0;
+    let totalCreditHours = 0;
+    let totalPoints = 0; // To store the total points across all subjects
 
-        for (let subject of subjects) {
-            const creditHours = parseFloat(subject.children[2].value);
-            const grade = subject.children[3].value;
+    for (let subject of subjects) {
+        const creditHours = parseFloat(subject.children[2].value);
+        const grade = subject.children[3].value;
 
-            if (!creditHours || !gradePoints[grade]) {
-                alert("Please fill in all credit hours.");
-                return;
-            }
-
-            totalGradePoints += gradePoints[grade] * creditHours;
-            totalCreditHours += creditHours;
-        }
-
-        if (totalCreditHours === 0) {
-            alert("Please add at least one subject.");
+        if (!creditHours || !gradePoints[grade]) {
+            alert("Please fill in all credit hours and grades.");
             return;
         }
 
-        const gpa = totalGradePoints / totalCreditHours;
-        document.getElementById("result").innerText = `Your GPA is: ${gpa.toFixed(2)}`;
+        const subjectPoints = gradePoints[grade] * creditHours;
+        totalGradePoints += subjectPoints;
+        totalCreditHours += creditHours;
+        totalPoints += subjectPoints; // Accumulate total points
     }
+
+    if (totalCreditHours === 0) {
+        alert("Please add at least one subject.");
+        return;
+    }
+
+    const gpa = totalGradePoints / totalCreditHours;
+    
+    // Display GPA and total points
+    document.getElementById("result").innerText = `Your GPA is: ${gpa.toFixed(2)}\nTotal Points: ${totalPoints.toFixed(2)}`;
+}
+
+
 
     function toggleTheme() {
         const body = document.body;
