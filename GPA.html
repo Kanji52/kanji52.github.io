@@ -212,12 +212,8 @@ border-radius: 50%; /* Rounded corners for images */
     function addSubject() {
     const form = document.getElementById("subjectsForm");
 
-    // Reset subject count if there are no subjects in the form
-    if (form.children.length === 0) {
-        subjectCount = 1;
-    } else {
-        subjectCount++; // Increment if subjects are present
-    }
+    // Set subjectCount based on the current number of subjects
+    const subjectCount = form.children.length + 1; // Starts from 1 for each new addition
 
     // Create a new subject div and add necessary elements
     const subjectDiv = document.createElement("div");
@@ -252,11 +248,7 @@ border-radius: 50%; /* Rounded corners for images */
     removeButton.type = "button";
     removeButton.onclick = () => {
         form.removeChild(subjectDiv);
-        
-        // Reset count to 1 if all subjects are removed
-        if (form.children.length === 0) {
-            subjectCount = 0;
-        }
+        updateSubjectLabels(); // Update labels for all subjects after removal
     };
 
     subjectDiv.appendChild(nameLabel);
@@ -265,7 +257,25 @@ border-radius: 50%; /* Rounded corners for images */
     subjectDiv.appendChild(gradeSelect);
     subjectDiv.appendChild(removeButton);
     form.appendChild(subjectDiv);
+
+    // Update labels after adding a new subject
+    updateSubjectLabels();
 }
+
+
+	function updateSubjectLabels() {
+    const subjects = document.getElementById("subjectsForm").children;
+    Array.from(subjects).forEach((subject, index) => {
+        // Update the label text
+        subject.querySelector("label").innerText = `Subject ${index + 1}:`;
+        
+        // Update the placeholder for the input field (name input for subject)
+        const nameInput = subject.querySelector("input[type='text']");
+        nameInput.placeholder = `Subject ${index + 1}`;
+    });
+}
+
+
 
 
     function calculateGPA() {
