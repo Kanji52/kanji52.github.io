@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
     <title>GPA Calculator</title>
+	<link rel="stylesheet" href="styles.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
     <style>
         /* Base styling */
         body {
@@ -15,14 +20,17 @@
         .container {
             max-width: 600px;
             margin: auto;
+        }
 
-            @media (max-width: 600px) {
-                .container {
-                    width: 100%;
-                    padding: 10px;
-                }
+        /*I may delete this line.*/
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 10px;
             }
         }
+
+
         label, input, select, button {
             display: block;
             margin: 10px 0;
@@ -343,6 +351,7 @@
     <form id="subjectsForm"></form>
 
     <button onclick="calculateGPA()" style="background-color: #1976d2; color: white; padding: 10px; border-radius: 5px; cursor: pointer;">Calculate GPA</button>
+<h2 id="result" class="result-box" style="display: none;"></h2>
 
     <h2 id="result"></h2>
 </div>
@@ -368,7 +377,8 @@
 
     // Create a new subject div and add necessary elements
     const subjectDiv = document.createElement("div");
-    subjectDiv.classList.add("subject");
+         subjectDiv.classList.add("subject", "animate-zoom-in-down"); // Add 'zoomInDown' animation
+
 
     const nameLabel = document.createElement("label");
     nameLabel.innerText = `Subject ${subjectCount}:`;
@@ -422,10 +432,18 @@
     removeButton.classList.add("remove-btn");
     removeButton.innerText = "Remove";
     removeButton.type = "button";
-    removeButton.onclick = () => {
-        form.removeChild(subjectDiv);
-        updateSubjectLabels(); // Update labels for all subjects after removal
+  removeButton.onclick = () => {
+        // Add the fade-out-down animation class
+        subjectDiv.classList.remove("animate-zoom-in-down"); // Remove any add animations
+        subjectDiv.classList.add("animate-fade-out-down");
+
+        // Wait for animation to complete before removing the element
+        subjectDiv.addEventListener("animationend", () => {
+            form.removeChild(subjectDiv); // Remove from DOM
+            updateSubjectLabels(); // Update subject labels
+        }, { once: true }); // Ensure listener runs only once
     };
+
 
     subjectDiv.appendChild(nameLabel);
     subjectDiv.appendChild(nameInput);
@@ -455,25 +473,28 @@
 
 
 
-    function calculateGPA() {
+   function calculateGPA() {
     const subjects = document.getElementsByClassName("subject");
     let totalGradePoints = 0;
     let totalCreditHours = 0;
-    let totalPoints = 0; // To store the total points across all subjects
+    let totalPoints = 0;
 
     for (let subject of subjects) {
-        const creditHours = parseFloat(subject.children[2].value);
-        const grade = subject.children[3].value;
+        const creditHoursInput = subject.querySelector("input[type='number']");
+        const gradeSelect = subject.querySelector("select");
 
-        if (!creditHours || !gradePoints[grade]) {
-            alert("Please fill in all credit hours and grades.");
+        const creditHours = parseFloat(creditHoursInput.value);
+        const grade = gradeSelect.value;
+
+        if (!creditHours) {
+            alert("Please fill in all credit hours.");
             return;
         }
 
         const subjectPoints = gradePoints[grade] * creditHours;
         totalGradePoints += subjectPoints;
         totalCreditHours += creditHours;
-        totalPoints += subjectPoints; // Accumulate total points
+        totalPoints += subjectPoints;
     }
 
     if (totalCreditHours === 0) {
@@ -482,11 +503,18 @@
     }
 
     const gpa = totalGradePoints / totalCreditHours;
-    
-    // Display GPA and total points
-    document.getElementById("result").innerText = `Your GPA is: ${gpa.toFixed(2)}\nTotal Points: ${totalPoints.toFixed(2)}`;
-}
 
+    // Update the result box content
+    const resultElement = document.getElementById("result");
+    resultElement.innerHTML = `
+        <span>Your GPA is: ${gpa.toFixed(2)}</span><br>
+        <span>Total Points: ${totalPoints.toFixed(2)}</span>
+    `;
+
+    // Display the result box with animation
+    resultElement.style.display = "block";
+    resultElement.classList.add("fade-in");
+}
 
 
     function toggleTheme() {
@@ -495,6 +523,8 @@
         body.classList.toggle("light-theme");
     }
 </script>
+
+
 
 </body>
 </html>
