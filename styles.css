@@ -1,0 +1,77 @@
+/* Result box styling */
+.result-box {
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    background: linear-gradient(135deg, #1976d2, #64b5f6);
+    padding: 15px 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0; /* Start hidden */
+    transform: scale(0.8); /* Scale down initially */
+    animation: fadeIn 0.8s forwards, glowing 4s infinite; /* Slower fade-in and glow */
+}
+
+/* Smooth appearing animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Continuous glowing animation */
+@keyframes glowing {
+    0% {
+        box-shadow: 0 0 10px rgba(50, 150, 250, 0.5);
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(50, 150, 250, 0.75), 0 0 30px rgba(50, 150, 250, 0.5);
+    }
+    75% {
+        box-shadow: 0 0 25px rgba(50, 150, 250, 0.85), 0 0 35px rgba(50, 150, 250, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(50, 150, 250, 0.5);
+    }
+}
+
+
+/* Keyframe for adding (zoomInDown) */
+@keyframes zoomInDown {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(-200%);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Keyframe for removing (fadeOutDown) */
+@keyframes fadeOutDown {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+/* Adding animation */
+.animate-zoom-in-down {
+    animation: zoomInDown 1s ease forwards;
+}
+
+/* Removing animation */
+.animate-fade-out-down {
+    animation: fadeOutDown 0.6s ease forwards;
+}
