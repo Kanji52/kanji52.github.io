@@ -740,6 +740,23 @@
         body.classList.toggle("dark-theme");
         body.classList.toggle("light-theme");
     }
+
+	const calcButton = document.querySelector("button"); // Select the Calculate button
+
+calcButton.addEventListener("click", () => {
+  // Add the animation class
+  calcButton.classList.add("animate");
+
+  // Remove the class after the animation ends
+  setTimeout(() => {
+    calcButton.classList.remove("animate");
+  }, 2000); // Adjust timing to match animation duration
+});
+
+
+       
+    
+
 </script>
 
 </body>
