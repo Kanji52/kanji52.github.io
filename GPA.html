@@ -23,7 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-	    text-align: center;	
+	    text-align: center;
             font-family: 'Rubik', Arial, sans-serif;
             font-size: 2em;
             z-index: 1000;
@@ -208,40 +208,6 @@
                 .gpa-btn:hover i:nth-child(4) {
                     transition-delay: calc(0.045s * 4);
                 }
-
-                .gpa-btn:hover i:nth-child(5) {
-                    transition-delay: calc(0.045s * 5);
-                }
-
-                .gpa-btn:hover i:nth-child(6) {
-                    transition-delay: calc(0.045s * 6);
-                }
-
-                .gpa-btn:hover i:nth-child(7) {
-                    transition-delay: calc(0.045s * 7);
-                }
-
-                .gpa-btn:hover i:nth-child(8) {
-                    transition-delay: calc(0.045s * 8);
-                }
-
-                .gpa-btn:hover i:nth-child(9) {
-                    transition-delay: calc(0.045s * 9);
-                }
-
-                .gpa-btn:hover i:nth-child(10) {
-                    transition-delay: calc(0.045s * 10);
-                }
-
-                .gpa-btn:hover i:nth-child(11) {
-                    transition-delay: calc(0.045s * 11);
-                }
-
-                .gpa-btn:hover i:nth-child(12) {
-                    transition-delay: calc(0.045s * 12);
-                }
-
-
 
         /* Light Theme */
         .light-theme {
@@ -527,17 +493,9 @@
 
 
     <button class="gpa-btn" alt="احسب المعدل 🖥️" onclick="calculateGPA()">
-  <i>ا</i>
-  <i>ح</i>
-  <i>س</i>
-  <i>ب</i>
+  <i>احسب</i>
   <i>&nbsp;</i>
-  <i>ا</i>
-  <i>ل</i>
-  <i>م</i>
-  <i>ع</i>
-  <i>د</i>
-  <i>ل</i>
+  <i>المعدل</i>
   <i>🖥️</i>
 </button>
 
@@ -740,24 +698,9 @@
         body.classList.toggle("dark-theme");
         body.classList.toggle("light-theme");
     }
-
-	const calcButton = document.querySelector("button"); // Select the Calculate button
-
-calcButton.addEventListener("click", () => {
-  // Add the animation class
-  calcButton.classList.add("animate");
-
-  // Remove the class after the animation ends
-  setTimeout(() => {
-    calcButton.classList.remove("animate");
-  }, 2000); // Adjust timing to match animation duration
-});
-
-
-       
-    
-
 </script>
+
+
 
 </body>
 </html>
